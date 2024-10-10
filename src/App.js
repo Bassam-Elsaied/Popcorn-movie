@@ -53,23 +53,28 @@ export default function App() {
         setIsLoading(true);
         setError("");
 
-        const res = await fetch(
-          `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
+        const url = `https://cors-anywhere.herokuapp.com/https://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
+        console.log("Fetching from URL:", url); // Log the URL being fetched
 
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching movies");
+        const res = await fetch(url, { signal: controller.signal });
+
+        if (!res.ok) {
+          console.error("Response not OK:", res.status, res.statusText);
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
 
         const data = await res.json();
-        if (data.Response === "False") throw new Error("Movie not found");
+        console.log("Received data:", data); // Log the received data
+
+        if (data.Response === "False")
+          throw new Error(data.Error || "Movie not found");
 
         setMovies(data.Search);
         setError("");
       } catch (err) {
         if (err.name !== "AbortError") {
-          console.log(err.message);
-          setError(err.message);
+          console.error("Fetch error:", err);
+          setError(`Error: ${err.message}`);
         }
       } finally {
         setIsLoading(false);
