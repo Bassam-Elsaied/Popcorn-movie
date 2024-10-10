@@ -53,7 +53,7 @@ export default function App() {
         setIsLoading(true);
         setError("");
 
-        const url = `https://cors-anywhere.herokuapp.com/https://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
+        const url = `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
         console.log("Fetching from URL:", url); // Log the URL being fetched
 
         const res = await fetch(url, { signal: controller.signal });
