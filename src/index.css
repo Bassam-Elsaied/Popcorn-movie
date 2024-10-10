@@ -102,6 +102,7 @@ body {
   .box {
     width: 100%;
     max-width: 100%;
+    min-height: 100px;
   }
 }
 
@@ -317,10 +318,6 @@ body {
 
 /* Add media query for smaller screens */
 @media (max-width: 768px) {
-  .details header {
-    flex-direction: column;
-  }
-
   .details img {
     width: 100%;
     height: auto;
